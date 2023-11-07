@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Plats Mangés par l'Utilisateur</title>
+    <!-- Inclure Bootstrap CSS (facultatif) -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+    <h1>Plats Mangés par l'Utilisateur</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card" style="width: 100%;">
+                    <div class="card-body">
+                        <h5 class="card-title">Liste des Repas</h5>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Nom du Plat</th>
+                                    <th>Quantité</th>
+                                    <th>Date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="repasList">
+                                <!-- Les repas de l'utilisateur seront affichés ici via JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Inclure jQuery (facultatif) pour les requêtes AJAX -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        // Fonction pour charger la liste des repas
+        function chargerListeRepas() {
+            $.ajax({
+                url: 'http://localhost/Projet_IDAW/APIs/api_profil.php', // URL de l'API
+                type: 'GET',
+                data: { id_user: 0 }, // ID utilisateur fixe
+                dataType: 'json',
+                success: function (data) {
+                    var repasList = '';
+                    data.forEach(function (repas) {
+                        repasList += `
+                            <tr>
+                                <td>${repas.NOM_PLAT}</td>
+                                <td>${repas.QUANTITE}</td>
+                                <td>${repas.DATE}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary edit" data-id="${repas.ID_PLAT}">Modifier</button>
+                                    <button class="btn btn-sm btn-danger delete" data-id="${repas.ID_PLAT}">Supprimer</button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                    $('#repasList').html(repasList);
+                },
+                error: function () {
+                    console.log("Une erreur s'est produite lors de la récupération des repas.");
+                }
+            });
+        }
+
+        // Charger la liste des repas au chargement de la page
+        chargerListeRepas();
+
+        // Gérer la modification de repas
+        $(document).on('click', '.edit', function () {
+            var id_plat = $(this).data('id');
+            var quantite = prompt('Nouvelle quantité :');
+            if (quantite !== null) {
+                var date = prompt('Nouvelle date (AAAA-MM-JJ) :');
+                if (date !== null) {
+                    $.ajax({
+                        url: 'http://localhost/Projet_IDAW/APIs/api_profil.php', // URL de l'API
+                        type: 'PUT',
+                        contentType: 'application/json',
+                        data: JSON.stringify({ ID_PLAT: id_plat, QUANTITE: quantite, DATE: date }),
+                        success: function (response) {
+                            chargerListeRepas(); // Recharger la liste des repas après modification
+                            console.log(response);
+                        },
+                        error: function () {
+                            console.log("Une erreur s'est produite lors de la modification du repas.");
+                        }
+                    });
+                }
+            }
+        });
+
+        // Gérer la suppression de repas
+        $(document).on('click', '.delete', function () {
+            var id_plat = $(this).data('id');
+            if (confirm('Êtes-vous sûr de vouloir supprimer ce repas ?')) {
+                $.ajax({
+                    url: 'http://localhost/Projet_IDAW/APIs/api_profil.php?ID_PLAT=' + id_plat, // Inclure l'ID du plat dans l'URL
+                    type: 'DELETE',
+                    success: function (response) {
+                        chargerListeRepas(); // Recharger la liste des repas après suppression
+                        console.log(response);
+                    },
+                    error: function () {
+                        console.log("Une erreur s'est produite lors de la suppression du repas.");
+                    }
+                });
+            }
+        });
+
+    </script>
+</body>
+
+</html>
