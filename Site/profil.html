@@ -43,7 +43,7 @@
             $.ajax({
                 url: 'http://localhost/Projet_IDAW/APIs/api_profil.php', // URL de l'API
                 type: 'GET',
-                data: { id_user: 0 }, // ID utilisateur fixe
+                data: { id_user: <?php echo getLoggedInUserId(); ?> }, // ID utilisateur connecté
                 dataType: 'json',
                 success: function (data) {
                     var repasList = '';
