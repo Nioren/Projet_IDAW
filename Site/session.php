@@ -1,5 +1,8 @@
 <?php
-
+if (session_status() == PHP_SESSION_NONE) {
+    // Démarrer la session uniquement si elle n'est pas déjà démarrée
+    session_start();
+}
 
 include 'config.php';
 
@@ -8,7 +11,6 @@ function isUserLoggedIn() {
 }
 
 function loginUser($id_user, $username) {
-    session_start();
     $_SESSION['id_user'] = $id_user;
     $_SESSION['nom_utilisateur'] = $username;
 }
