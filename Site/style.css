@@ -1,0 +1,144 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    background-color: lightgray;
+}
+
+
+header {
+    background-color: #FFA500; /* Orange */
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    color: #008000; /* Vert */
+    font-size: 20px;
+}
+
+.nav a {
+    text-decoration: none;
+    color: #008000; /* Vert */
+    margin: 0 10px;
+    font-weight: bold;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-info a {
+    text-decoration: none;
+    color: #008000; /* Vert */
+    margin: 0 10px;
+}
+
+.custom-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    transition: transform 0.3s;
+}
+
+.custom-card:hover {
+    transform: scale(1.05);
+}
+
+.custom-card .card-img {
+    height: 300px;
+    object-fit: cover;
+}
+
+.custom-card .card-body {
+    padding: 20px;
+    background-color: #FFA500;
+}
+
+.custom-card .card-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.custom-card .ajouter-repas {
+    background-color: #008000; /* Vert */
+    color: #FFF; /* Blanc */
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.custom-card .ajouter-repas:hover {
+    background-color: #006400; /* Vert plus foncé au survol */
+}
+
+/* Nouvelles règles pour les boutons Modifier et Supprimer */
+.custom-card .edit {
+    background-color: #008000; /* Vert */
+    color: #FFF; /* Blanc */
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.custom-card .edit:hover {
+    background-color: #006400; /* Vert plus foncé au survol */
+}
+
+.custom-card .delete {
+    background-color: #00FF00; /* Vert clair */
+    color: #FFF; /* Blanc */
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Style du bouton de réinitialisation de la date */
+#resetDate.reset-date {
+    background-color: #008000; /* Couleur de fond */
+    color: #fff; /* Couleur du texte */
+    border: none; /* Supprimer la bordure */
+    padding: 5px 10px; /* Espacement intérieur */
+    cursor: pointer; /* Curseur pointeur au survol */
+    border-radius: 5px; /* Coins arrondis */
+}
+
+#resetDate.reset-date:hover {
+    background-color: #006400; /* Couleur de fond au survol */
+}
+
+.custom-card .delete:hover {
+    background-color: #008000; /* Vert plus foncé au survol */
+}
+
+/* Nouvelles règles pour la datatable */
+table.dataTable {
+    width: 100% !important; /* Définissez la largeur de la datatable à 100% */
+}
+
+table.dataTable thead th,
+table.dataTable tbody td {
+    white-space: nowrap; /* Empêchez le renvoi à la ligne dans les cellules */
+}
+
+/* Ajoutez ces styles pour décaler l'affichage des calories */
+#summary {
+    margin-top: 20px; /* Espace au-dessus du résumé nutritionnel */
+    margin-left: 50px; /* Décalage vers la droite */
+}

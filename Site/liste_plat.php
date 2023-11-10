@@ -1,19 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Liste des plats</title>
     <!-- Inclure Bootstrap CSS (facultatif) -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        .card-img {
-            height: 400px; /* Hauteur fixe pour les images des cartes */
-            object-fit: cover; /* Évite que les images soient étirées ou déformées */
-        }
-    </style>
+    <!-- Inclure votre fichier de style -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Liste des plats</h1>
+    <?php include 'header.php'; ?>
+    <h1 class="text-center mt-4">Liste des plats</h1>
     <div class="container">
         <div class="row" id="platList">
             <!-- Les cartes de plats seront générées ici via JavaScript -->
@@ -56,7 +53,7 @@
                     data.forEach(function(plat) {
                         var platCard = `
                             <div class="col-md-4 mb-4">
-                                <div class="card" style="width: 18rem;">
+                                <div class="card custom-card"> <!-- Utilisez la classe custom-card -->
                                     <img src="${plat.IMAGE}" class="card-img" alt="${plat.NOM_PLAT}">
                                     <div class="card-body">
                                         <h5 class="card-title">${plat.NOM_PLAT}</h5>

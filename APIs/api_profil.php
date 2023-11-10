@@ -1,9 +1,6 @@
 <?php
 // Connexion à la base de données
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "bddidaw";
+include 'config_api.php';
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -16,10 +13,12 @@ $id_utilisateur = 0;
 
 // Endpoint pour récupérer la liste des repas de l'utilisateur
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    $dateCondition = isset($_GET['date']) ? " AND M.DATE = '" . $_GET['date'] . "'" : "";
+
     $sql = "SELECT M.ID_PLAT, P.NOM_PLAT, M.QUANTITE, M.DATE
             FROM MANGER_PLAT M
             JOIN PLAT P ON M.ID_PLAT = P.ID_PLAT
-            WHERE M.ID_USER = $id_utilisateur";
+            WHERE M.ID_USER = $id_utilisateur" . $dateCondition;
 
     $result = $conn->query($sql);
     $data = [];
@@ -74,7 +73,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
         echo "Erreur : " . $conn->error;
     }
 }
-
 
 // Fermer la connexion à la base de données
 $conn->close();

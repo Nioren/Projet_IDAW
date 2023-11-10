@@ -1,9 +1,6 @@
 <?php
 // Connexion à la base de données
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "bddidaw";
+include 'config_api.php';
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
