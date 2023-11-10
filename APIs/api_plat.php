@@ -8,11 +8,14 @@ if ($conn->connect_error) {
     die("La connexion à la base de données a échoué : " . $conn->connect_error);
 }
 
-// Endpoint pour récupérer la liste des plats depuis la table PLAT
+// Endpoint pour récupérer la liste des plats
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $sql = "SELECT ID_PLAT, NOM_PLAT, IMAGE FROM PLAT";
-    $result = $conn->query($sql);
+    // Filtrer les plats par le nom s'il y a une recherche, sinon récupérer tous les plats
+    $searchCondition = isset($_GET['search']) ? " WHERE NOM_PLAT LIKE '%" . $_GET['search'] . "%'" : "";
 
+    $sql = "SELECT * FROM PLAT" . $searchCondition;
+
+    $result = $conn->query($sql);
     $data = [];
 
     if ($result->num_rows > 0) {
@@ -21,7 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         }
     }
 
-    header('Content-Type: application/json');
     echo json_encode($data);
 }
 

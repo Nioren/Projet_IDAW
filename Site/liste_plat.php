@@ -7,12 +7,19 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Inclure votre fichier de style -->
     <link rel="stylesheet" href="style.css">
+
 </head>
 <body>
     <?php include 'header.php'; ?>
     <h1 class="text-center mt-4">Liste des plats</h1>
+
+    <!-- Barre de recherche centrée -->
+    <div id="searchBarContainer">
+        <input type="text" id="searchBar" class="form-control" placeholder="Rechercher des plats...">
+    </div>
+
     <div class="container">
-        <div class="row" id="platList">
+        <div class="row plat-container" id="platList">
             <!-- Les cartes de plats seront générées ici via JavaScript -->
         </div>
     </div>
@@ -21,6 +28,53 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script>
         $(document).ready(function() {
+            // Requête AJAX pour récupérer la liste des plats depuis l'API
+            function fetchPlats(searchTerm = "") {
+                $.ajax({
+                    url: 'http://localhost/Projet_IDAW/APIs/api_plat.php',
+                    type: 'GET',
+                    dataType: 'json',
+                    data: { search: searchTerm },
+                    success: function(data) {
+                        // Créez les cartes de plats à partir des données récupérées
+                        $('#platList').empty(); // Supprimer le contenu existant avant d'ajouter les nouveaux plats
+                        data.forEach(function(plat) {
+                            var platCard = `
+                                <div class="col-md-4 mb-4">
+                                    <div class="card custom-card">
+                                        <img src="${plat.IMAGE}" class="card-img" alt="${plat.NOM_PLAT}">
+                                        <div class="card-body">
+                                            <h5 class="card-title">${plat.NOM_PLAT}</h5>
+                                            <button class="btn btn-primary ajouter-repas" data-idplat="${plat.ID_PLAT}" data-nomplat="${plat.NOM_PLAT}">+</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                            $('#platList').append(platCard);
+                        });
+                    },
+                    error: function() {
+                        console.log("Une erreur s'est produite lors de la récupération des données.");
+                    }
+                });
+            }
+
+            // Appeler fetchPlats au chargement de la page pour afficher tous les plats
+            fetchPlats();
+
+            // Gérer les changements dans la barre de recherche
+            $('#searchBar').on('input', function() {
+                var searchTerm = $(this).val();
+                fetchPlats(searchTerm);
+            });
+
+            // Gérer le clic sur le bouton "+"
+            $(document).on('click', '.ajouter-repas', function() {
+                var id_plat = $(this).data('idplat');
+                var nom_plat = $(this).data('nomplat');
+                ajouterRepas(id_plat, nom_plat);
+            });
+
             // Fonction pour gérer l'ajout d'un repas
             function ajouterRepas(id_plat, nom_plat) {
                 var quantite = prompt(`Quantité de "${nom_plat}" :`);
@@ -29,10 +83,10 @@
                     // Utilisez l'API appropriée pour ajouter le repas
                     // Exemple :
                     $.ajax({
-                        url: 'http://localhost/Projet_IDAW/APIs/api_profil.php', // URL de l'API
+                        url: 'http://localhost/Projet_IDAW/APIs/api_profil.php',
                         type: 'POST',
                         contentType: 'application/json',
-                        data: JSON.stringify({ id_user: 0, ID_PLAT: id_plat, QUANTITE: quantite, DATE: '2023-11-07' }), // ID utilisateur fixe
+                        data: JSON.stringify({ id_user: 0, ID_PLAT: id_plat, QUANTITE: quantite }),
                         success: function(response) {
                             console.log(response);
                         },
@@ -42,40 +96,6 @@
                     });
                 }
             }
-
-            // Requête AJAX pour récupérer la liste des plats depuis l'API
-            $.ajax({
-                url: 'http://localhost/Projet_IDAW/APIs/api_plat.php',
-                type: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    // Créez les cartes de plats à partir des données récupérées
-                    data.forEach(function(plat) {
-                        var platCard = `
-                            <div class="col-md-4 mb-4">
-                                <div class="card custom-card"> <!-- Utilisez la classe custom-card -->
-                                    <img src="${plat.IMAGE}" class="card-img" alt="${plat.NOM_PLAT}">
-                                    <div class="card-body">
-                                        <h5 class="card-title">${plat.NOM_PLAT}</h5>
-                                        <button class="btn btn-primary ajouter-repas" data-idplat="${plat.ID_PLAT}" data-nomplat="${plat.NOM_PLAT}">+</button>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                        $('#platList').append(platCard);
-                    });
-
-                    // Gérer le clic sur le bouton "+"
-                    $('.ajouter-repas').click(function() {
-                        var id_plat = $(this).data('idplat');
-                        var nom_plat = $(this).data('nomplat');
-                        ajouterRepas(id_plat, nom_plat);
-                    });
-                },
-                error: function() {
-                    console.log("Une erreur s'est produite lors de la récupération des données.");
-                }
-            });
         });
     </script>
 </body>

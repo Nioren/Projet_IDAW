@@ -1,16 +1,19 @@
+/* Reset CSS */
 body, html {
     margin: 0;
     padding: 0;
     background-color: lightgray;
 }
 
-
+/* Header Styles */
 header {
     background-color: #FFA500; /* Orange */
 }
 
+/* Container Styles */
 .container {
     max-width: 1200px;
+    width: auto;
     margin: 0 auto;
     padding: 10px;
     text-align: center;
@@ -19,11 +22,13 @@ header {
     align-items: center;
 }
 
+/* Logo Styles */
 .logo {
     color: #008000; /* Vert */
     font-size: 20px;
 }
 
+/* Navigation Styles */
 .nav a {
     text-decoration: none;
     color: #008000; /* Vert */
@@ -31,6 +36,7 @@ header {
     font-weight: bold;
 }
 
+/* User Info Styles */
 .user-info {
     display: flex;
     align-items: center;
@@ -42,12 +48,20 @@ header {
     margin: 0 10px;
 }
 
+/* Card Styles */
 .custom-card {
     border: 1px solid #ddd;
     border-radius: 8px;
     margin-bottom: 20px;
     overflow: hidden;
     transition: transform 0.3s;
+    min-width: 300px;
+}
+
+.plat-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .custom-card:hover {
@@ -56,7 +70,7 @@ header {
 
 .custom-card .card-img {
     height: 300px;
-    object-fit: cover;
+    object-fit: scale-down;
 }
 
 .custom-card .card-body {
@@ -70,29 +84,28 @@ header {
     color: #333;
 }
 
-.custom-card .ajouter-repas {
-    background-color: #008000; /* Vert */
-    color: #FFF; /* Blanc */
+/* Button Styles */
+.custom-card button {
     border: none;
-    padding: 8px 16px;
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s;
+}
+
+.custom-card .ajouter-repas {
+    background-color: #008000; /* Vert */
+    color: #FFF; /* Blanc */
+    padding: 8px 16px;
 }
 
 .custom-card .ajouter-repas:hover {
     background-color: #006400; /* Vert plus foncé au survol */
 }
 
-/* Nouvelles règles pour les boutons Modifier et Supprimer */
 .custom-card .edit {
     background-color: #008000; /* Vert */
     color: #FFF; /* Blanc */
-    border: none;
     padding: 8px 16px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
 }
 
 .custom-card .edit:hover {
@@ -102,43 +115,54 @@ header {
 .custom-card .delete {
     background-color: #00FF00; /* Vert clair */
     color: #FFF; /* Blanc */
-    border: none;
     padding: 8px 16px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-/* Style du bouton de réinitialisation de la date */
-#resetDate.reset-date {
-    background-color: #008000; /* Couleur de fond */
-    color: #fff; /* Couleur du texte */
-    border: none; /* Supprimer la bordure */
-    padding: 5px 10px; /* Espacement intérieur */
-    cursor: pointer; /* Curseur pointeur au survol */
-    border-radius: 5px; /* Coins arrondis */
-}
-
-#resetDate.reset-date:hover {
-    background-color: #006400; /* Couleur de fond au survol */
 }
 
 .custom-card .delete:hover {
     background-color: #008000; /* Vert plus foncé au survol */
 }
 
-/* Nouvelles règles pour la datatable */
+/* Reset Date Button Styles */
+#resetDate.reset-date {
+    background-color: #008000; /* Couleur de fond */
+    color: #fff; /* Couleur du texte */
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#resetDate.reset-date:hover {
+    background-color: #006400; /* Couleur de fond au survol */
+}
+
+/* DataTable Styles */
 table.dataTable {
-    width: 100% !important; /* Définissez la largeur de la datatable à 100% */
+    width: 100% !important;
 }
 
 table.dataTable thead th,
 table.dataTable tbody td {
-    white-space: nowrap; /* Empêchez le renvoi à la ligne dans les cellules */
+    white-space: nowrap;
 }
 
-/* Ajoutez ces styles pour décaler l'affichage des calories */
+/* Summary Styles */
 #summary {
-    margin-top: 20px; /* Espace au-dessus du résumé nutritionnel */
-    margin-left: 50px; /* Décalage vers la droite */
+    margin-top: 20px;
+    margin-left: 50px;
+}
+
+/* Search Bar Styles */
+#searchBarContainer {
+    text-align: center;
+    margin-top: 20px;
+    max-width: 20%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#searchBar {
+    max-width: 300px;
+    width: 100%;
+    margin: 0 auto;
 }

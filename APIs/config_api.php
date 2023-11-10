@@ -4,4 +4,6 @@ $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "bddidaw";
+
+$todayDate = date("Y-m-d");
 ?>

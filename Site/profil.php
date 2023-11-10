@@ -98,8 +98,6 @@
 
             });
 
-            // Initialiser DataTable
-            $('#repasList').DataTable();
 
             // Charger la liste des repas au chargement de la page
             chargerListeRepas();
@@ -123,7 +121,7 @@
                 var dd = date.getDate().toString().padStart(2, '0');
                 return yyyy + '-' + mm + '-' + dd;
             }
-            
+
             // Fonction pour charger la liste des repas
             function chargerListeRepas(date) {
                 $.ajax({
@@ -137,8 +135,8 @@
                     success: function(data) {
                         var repasList = [];
                         data.forEach(function(repas) {
-                            var buttons = '<button class="btn btn-sm btn-primary edit" data-id="' + repas.ID_PLAT + '">Modifier</button>' +
-                                '<button class="btn btn-sm btn-danger delete" data-id="' + repas.ID_PLAT + '">Supprimer</button>';
+                            var buttons = '<button class="btn btn-sm btn-primary edit" data-id="' + repas.ID_REPAS + '">Modifier</button>' +
+                                '<button class="btn btn-sm btn-danger delete" data-id="' + repas.ID_REPAS + '">Supprimer</button>';
 
                             repasList.push([
                                 repas.NOM_PLAT,
@@ -155,7 +153,6 @@
                         // Ajouter les événements aux boutons Modifier et Supprimer
                         ajouterEvenementsBoutons();
                     },
-
                 });
             }
 
@@ -165,20 +162,22 @@
             function ajouterEvenementsBoutons() {
                 // Événement pour le bouton Modifier
                 $('.edit').on('click', function() {
-                    var idPlat = $(this).data('id');
+                    var idRepas = $(this).data('id');
                     // Appeler une fonction qui gère la modification du repas
-                    modifierRepas(idPlat);
+                    modifierRepas(idRepas);
                 });
 
                 // Événement pour le bouton Supprimer
                 $('.delete').on('click', function() {
-                    var idPlat = $(this).data('id');
+                    var idRepas = $(this).data('id');
                     // Appeler une fonction qui gère la suppression du repas
-                    supprimerRepas(idPlat);
+                    supprimerRepas(idRepas);
                 });
             }
 
-            function modifierRepas(idPlat) {
+
+            // Fonction pour modifier un repas
+            function modifierRepas(idRepas) {
                 // Demander à l'utilisateur la nouvelle quantité et la nouvelle date
                 var nouvelleQuantite = prompt("Veuillez entrer la nouvelle quantité :");
                 var nouvelleDate = prompt("Veuillez entrer la nouvelle date (YYYY-MM-DD) :");
@@ -192,7 +191,7 @@
                         type: 'PUT',
                         contentType: 'application/json',
                         data: JSON.stringify({
-                            ID_PLAT: idPlat,
+                            ID_REPAS: idRepas,
                             QUANTITE: nouvelleQuantite,
                             DATE: nouvelleDate
                             // Ajoutez d'autres champs si nécessaire
@@ -213,14 +212,15 @@
             }
 
 
-            function supprimerRepas(idPlat) {
+            // Fonction pour supprimer un repas
+            function supprimerRepas(idRepas) {
                 // Demander confirmation à l'utilisateur
                 var confirmation = confirm("Êtes-vous sûr de vouloir supprimer ce repas ?");
                 if (confirmation) {
                     // Ajoutez ici le code pour appeler l'API et supprimer le repas
                     // Utilisez l'API 'http://localhost/Projet_IDAW/APIs/api_profil.php' avec la méthode DELETE
                     $.ajax({
-                        url: 'http://localhost/Projet_IDAW/APIs/api_profil.php?ID_PLAT=' + idPlat,
+                        url: 'http://localhost/Projet_IDAW/APIs/api_profil.php?ID_REPAS=' + idRepas,
                         type: 'DELETE',
                         success: function(response) {
                             // Réactualiser la liste des repas après la suppression
