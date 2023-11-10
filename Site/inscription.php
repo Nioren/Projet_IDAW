@@ -7,6 +7,15 @@
 </head>
 
 <body>
+    <div class="container mt-5">
+        <?php
+        if (isset($_GET['error']) && $_GET['error'] === 'username_taken') {
+            echo '<div class="alert alert-danger" role="alert">Ce nom d\'utilisateur est déjà utilisé. Veuillez en choisir un autre.</div>';
+        }
+        elseif (isset($_GET['success'])) {
+            echo '<div class="alert alert-success" role="alert">Inscription réussie !</div>';
+        }
+        ?>
     <h1>Inscription</h1>
     <form action="http://localhost/Projet_IDAW/Session/traitement_inscription.php" method="post">
         <label for="nom_utilisateur">Login:</label>
