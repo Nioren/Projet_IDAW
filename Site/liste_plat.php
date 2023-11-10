@@ -89,7 +89,6 @@
                         url: 'http://localhost/Projet_IDAW/APIs/api_profil.php',
                         type: 'POST',
                         data: {
-                            ID_USER: <?php echo $_SESSION['id_user']; ?>, // Ajoutez cette ligne pour inclure l'ID de l'utilisateur
                             ID_PLAT: id_plat,
                             QUANTITE: quantite
                         },
