@@ -2,16 +2,17 @@
 include 'config.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $login = $_POST['login'];
-    $motDePasse = password_hash($_POST['mot_de_passe'], PASSWORD_DEFAULT);
-    $dateNaissance = $_POST['date_naissance'];
-    $niveauSportif = $_POST['niveau_sportif'];
+    $username = $_POST['nom_utilisateur'];
+    $mot_de_passe = password_hash($_POST['mot_de_passe'], PASSWORD_DEFAULT);
+    $age = $_POST['age'];
+    $sport = $_POST['sport'];
 
-    $query = "INSERT INTO utilisateurs (login, mot_de_passe, date_naissance, niveau_sportif) VALUES (?, ?, ?, ?)";
+    $query = "INSERT INTO utilisateur (nom_utilisateur, mot_de_passe, age, sport) VALUES (?, ?, ?, ?)";
     $stmt = $pdo->prepare($query);
-    $stmt->execute([$login, $motDePasse, $dateNaissance, $niveauSportif]);
+    $stmt->execute([$username, $mot_de_passe, $age, $sport]);
 
-    header("Location: http://localhost/Projet_IDAW/Site/connexion.php");
-    exit();
+    header("Location: http://localhost/Projet_IDAW/Site/inscription.php?success=1");
+} else {
+    header("Location: http://localhost/Projet_IDAW/Site/inscription.php");
 }
 ?>
