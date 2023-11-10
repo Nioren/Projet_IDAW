@@ -76,4 +76,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
 
 // Fermer la connexion à la base de données
 $conn->close();
+
+include 'session.php';
+
+if (!isUserLoggedIn()) {
+    header("Location: login.php");
+    exit();
+}
+
+$idUtilisateurConnecte = getLoggedInUserId();
+
+
+echo json_encode($donneesRepas);
 ?>
