@@ -28,12 +28,6 @@ $destinationConn->select_db("bddidaw");
 $sqlFilePath = "BDDIDAW.sql"; // Remplacez par le chemin réel de votre fichier SQL
 $sqlContent = file_get_contents($sqlFilePath);
 
-if ($destinationConn->multi_query($sqlContent) === TRUE) {
-    echo "Tables créées avec succès.<br>";
-} else {
-    echo "Erreur lors de la création des tables : " . $destinationConn->error . "<br>";
-}
-
 // URL de l'API OpenFoodFacts pour la récupération de produits
 $url = "https://world.openfoodfacts.org/cgi/search.pl?search_terms=&page_size=100&json=1";
 
@@ -66,9 +60,7 @@ if (curl_errno($ch)) {
                        VALUES ('$nom_plat', '$nutriments', '$image')";
 
             if ($destinationConn->query($sqlInsertData) !== TRUE) {
-                echo "Erreur lors de l'ajout de l'enregistrement dans la table 'PLAT' : " . $destinationConn->error . "<br>";
             } else {
-                echo "Plat ajouté avec succès : $nom_plat<br>";
             }
 
             // Libérez les résultats non consommés
