@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 
 include 'config.php';
 
@@ -8,7 +8,6 @@ function isUserLoggedIn() {
 }
 
 function loginUser($id_user, $username) {
-    session_start();
     $_SESSION['id_user'] = $id_user;
     $_SESSION['nom_utilisateur'] = $username;
 }
@@ -33,3 +32,4 @@ try {
     echo "Erreur de connexion à la base de données: " . $e->getMessage();
     die();
 }
+?>

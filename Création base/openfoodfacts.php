@@ -1,58 +1,37 @@
 <?php
 
-/* 
-    FICHIER A EXECUTER AFIN D'OBTENIR LA BASE SIMPLIFIEE DE OPENFOODFACTS
-*/
+// Configuration de la base de données destination (votre base)
+$destinationServer = "localhost";
+$destinationUsername = "root";
+$destinationPassword = "";
 
-// Configuration de la base de données
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "off";
+// Connexion à la base de données destination
+$destinationConn = new mysqli($destinationServer, $destinationUsername, $destinationPassword);
 
-// Connexion à la base de données
-$conn = new mysqli($servername, $username, $password, $database);
-
-// Vérifier la connexion
-if ($conn->connect_error) {
-    die("Erreur de connexion à la base de données : " . $conn->connect_error);
+// Vérifier la connexion à la base de données destination
+if ($destinationConn->connect_error) {
+    die("Erreur de connexion à la base de données destination : " . $destinationConn->connect_error);
 }
 
-// Nom de la base de données
-$database = "openfoodfactsbdd";
-
-// Supprimer la base de données si elle existe déjà
-$sql = "DROP DATABASE IF EXISTS $database";
-if ($conn->query($sql) === TRUE) {
-    echo "Base de données '$database' supprimée avec succès.<br>";
+// Création de la base de données bddidaw
+$sqlCreateDatabase = "CREATE DATABASE IF NOT EXISTS bddidaw";
+if ($destinationConn->query($sqlCreateDatabase) === TRUE) {
+    echo "Base de données 'bddidaw' créée avec succès.<br>";
 } else {
-    echo "Erreur lors de la suppression de la base de données : " . $conn->error . "<br>";
+    echo "Erreur lors de la création de la base de données : " . $destinationConn->error . "<br>";
 }
 
-// Créer la base de données
-$sql = "CREATE DATABASE $database";
-if ($conn->query($sql) === TRUE) {
-    echo "Base de données '$database' créée avec succès.<br>";
+// Utilisation de la base de données bddidaw
+$destinationConn->select_db("bddidaw");
+
+// Exécution du fichier SQL pour créer les tables
+$sqlFilePath = "BDDIDAW.sql"; // Remplacez par le chemin réel de votre fichier SQL
+$sqlContent = file_get_contents($sqlFilePath);
+
+if ($destinationConn->multi_query($sqlContent) === TRUE) {
+    echo "Tables créées avec succès.<br>";
 } else {
-    echo "Erreur lors de la création de la base de données : " . $conn->error . "<br>";
-}
-
-// Utiliser la base de données
-$conn->select_db($database);
-
-// Créer la table openfoodfacts
-$table_name = "openfoodfacts";
-$sql = "CREATE TABLE $table_name (
-    id INT(11) AUTO_INCREMENT PRIMARY KEY,
-    product_name VARCHAR(255),
-    nutriments JSON,
-    url_image VARCHAR(255)
-)";
-
-if ($conn->query($sql) === TRUE) {
-    echo "Table 'openfoodfacts' créée avec succès.<br>";
-} else {
-    echo "Erreur lors de la création de la table : " . $conn->error . "<br>";
+    echo "Erreur lors de la création des tables : " . $destinationConn->error . "<br>";
 }
 
 // URL de l'API OpenFoodFacts pour la récupération de produits
@@ -75,27 +54,38 @@ if (curl_errno($ch)) {
     $data = json_decode($response, true);
 
     if (isset($data['products']) && is_array($data['products'])) {
-        // Boucle à travers les produits et insérez-les dans la base de données
+        // Boucle à travers les produits et insérez-les dans la table "PLAT"
+        // Boucle à travers les produits et insérez-les dans la table "PLAT"
         foreach ($data['products'] as $product) {
-            $product_name = $conn->real_escape_string($product['product_name']);
-            $nutriments = json_encode($product['nutriments']);
-            $url_image = $product['image_front_url'];
+            $nom_plat = $destinationConn->real_escape_string(utf8_encode($product['product_name']));
+            $nutriments = $destinationConn->real_escape_string(json_encode($product['nutriments']));
+            $image = $destinationConn->real_escape_string($product['image_front_url']);
 
-            // Insérez les données dans la table
-            $sql = "INSERT INTO openfoodfacts (product_name, nutriments, url_image) VALUES ('$product_name', '$nutriments', '$url_image')";
+            // Insérez les données dans la table "PLAT"
+            $sqlInsertData = "INSERT INTO PLAT (NOM_PLAT, NUTRIMENTS, IMAGE) 
+                       VALUES ('$nom_plat', '$nutriments', '$image')";
 
-            if ($conn->query($sql) !== TRUE) {
-                echo "Erreur lors de l'ajout de l'enregistrement : " . $conn->error;
+            if ($destinationConn->query($sqlInsertData) !== TRUE) {
+                echo "Erreur lors de l'ajout de l'enregistrement dans la table 'PLAT' : " . $destinationConn->error . "<br>";
+            } else {
+                echo "Plat ajouté avec succès : $nom_plat<br>";
             }
+
+            // Libérez les résultats non consommés
+            $destinationConn->next_result();
         }
+
+
+
+
+        echo "Transfert des données terminé avec succès.<br>";
     } else {
-        echo "Aucune donnée de produit n'a été récupérée depuis l'API OpenFoodFacts.";
+        echo "Aucune donnée de produit n'a été récupérée depuis l'API OpenFoodFacts.<br>";
     }
 }
 
-// Fermez la connexion à la base de données
-$conn->close();
+// Fermeture de la connexion à la base de données
+$destinationConn->close();
 
-// Fermez la session cURL
+// Fermeture de la session cURL
 curl_close($ch);
-?>

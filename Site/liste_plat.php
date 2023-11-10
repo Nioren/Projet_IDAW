@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Liste des plats</title>
@@ -9,11 +10,11 @@
     <link rel="stylesheet" href="style.css">
 
 </head>
+
 <body>
     <?php include 'header.php'; ?>
     <h1 class="text-center mt-4">Liste des plats</h1>
 
-    <!-- Barre de recherche centrée -->
     <div id="searchBarContainer">
         <input type="text" id="searchBar" class="form-control" placeholder="Rechercher des plats...">
     </div>
@@ -34,7 +35,9 @@
                     url: 'http://localhost/Projet_IDAW/APIs/api_plat.php',
                     type: 'GET',
                     dataType: 'json',
-                    data: { search: searchTerm },
+                    data: {
+                        search: searchTerm
+                    },
                     success: function(data) {
                         // Créez les cartes de plats à partir des données récupérées
                         $('#platList').empty(); // Supprimer le contenu existant avant d'ajouter les nouveaux plats
@@ -85,10 +88,15 @@
                     $.ajax({
                         url: 'http://localhost/Projet_IDAW/APIs/api_profil.php',
                         type: 'POST',
-                        contentType: 'application/json',
-                        data: JSON.stringify({ id_user: 0, ID_PLAT: id_plat, QUANTITE: quantite }),
+                        data: {
+                            ID_USER: <?php echo $_SESSION['id_user']; ?>, // Ajoutez cette ligne pour inclure l'ID de l'utilisateur
+                            ID_PLAT: id_plat,
+                            QUANTITE: quantite
+                        },
                         success: function(response) {
                             console.log(response);
+                            // Vous pouvez rafraîchir la liste des plats après l'ajout d'un repas si nécessaire
+                            fetchPlats();
                         },
                         error: function() {
                             console.log("Une erreur s'est produite lors de l'ajout du repas.");
@@ -96,7 +104,9 @@
                     });
                 }
             }
+
         });
     </script>
 </body>
+
 </html>

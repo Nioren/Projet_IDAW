@@ -128,7 +128,6 @@
                     url: 'http://localhost/Projet_IDAW/APIs/api_profil.php',
                     type: 'GET',
                     data: {
-                        id_user: 0,
                         date: date // Utilisez la date ici dans la requête
                     },
                     dataType: 'json',
@@ -275,7 +274,6 @@
                             url: 'http://localhost/Projet_IDAW/APIs/api_calories.php',
                             type: 'GET',
                             data: {
-                                id_user: 0,
                                 date: date
                             },
                             success: function(data) {

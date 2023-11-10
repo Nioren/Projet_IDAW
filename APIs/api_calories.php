@@ -1,11 +1,12 @@
 <?php
 // Inclure le fichier de configuration de la base de données
 include 'config_api.php';
+session_start();
 
 // Vérifier si l'ID utilisateur et la date sont fournis dans la requête
-if (isset($_GET['id_user']) && isset($_GET['date'])) {
+if (isset($_GET['date'])) {
     // Récupérer les données de la requête
-    $id_user = $_GET['id_user'];
+    $id_user = $_SESSION['id_user'];
     $date = $_GET['date'];
 
     try {
