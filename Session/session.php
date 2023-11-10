@@ -1,24 +1,34 @@
 <?php
 session_start();
 
+include 'config.php';
+
 function isUserLoggedIn() {
-    return isset($_SESSION['user_id']);
+    return isset($_SESSION['id_user']);
 }
 
-function loginUser($user_id, $username) {
-    $_SESSION['user_id'] = $user_id;
-    $_SESSION['username'] = $username;
+function loginUser($id_user, $username) {
+    $_SESSION['id_user'] = $id_user;
+    $_SESSION['nom_utilisateur'] = $username;
 }
 
 function logoutUser() {
-    unset($_SESSION['user_id']);
-    unset($_SESSION['username']);
+    unset($_SESSION['id_user']);
+    unset($_SESSION['nom_utilisateur']);
 }
 
 function getLoggedInUserId() {
-    return isUserLoggedIn() ? $_SESSION['user_id'] : null;
+    return isUserLoggedIn() ? $_SESSION['id_user'] : null;
 }
 
 function getLoggedInUsername() {
-    return isUserLoggedIn() ? $_SESSION['username'] : null;
+    return isUserLoggedIn() ? $_SESSION['nom_utilisateur'] : null;
+}
+
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo "Erreur de connexion à la base de données: " . $e->getMessage();
+    die();
 }
