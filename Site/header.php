@@ -3,8 +3,7 @@
 
 <?php
 // Inclure vos fichiers et fonctions nécessaires
-include 'config.php';
-include 'session.php';
+
 
 // Vérifier si la session est déjà démarrée
 if (session_status() == PHP_SESSION_NONE) {
@@ -33,8 +32,8 @@ if (session_status() == PHP_SESSION_NONE) {
             <div class="user-info">
                 <?php
                 // Vérifie si l'utilisateur est connecté
-                if (isUserLoggedIn()) {
-                    echo "Bonjour, " . getLoggedInUsername();
+                if (isset($_SESSION['id_user'])) {
+                    echo "Bonjour, " . $_SESSION['nom_utilisateur'];
                 } else {
                     echo '<a href="connexion.php">Connexion</a>';
                     echo '<a href="inscription.php">Inscription</a>';
