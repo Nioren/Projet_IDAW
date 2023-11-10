@@ -1,5 +1,5 @@
 Les règles de gestions sont les suivantes :
 
 - Utilisation d'un id user afin de gérer les comptes plus facilement
-- Pas possible d'avoir 2 fois le mêmes nom d'utilisateur car cela pose des problèmes pour la gestion des comptes sans un meilleur système
+- Pas possible d'avoir 2 fois le même nom d'utilisateur car cela pose des problèmes pour la gestion des comptes sans un meilleur système
 - Utilisation d'un id repas afin d'éviter le soucis de ne pas pouvoir manger la même chose deux jours différents (car l'id plat et id user seraient identiques, donc les clés primaires seraient identiques)
