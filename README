@@ -1,1 +1,20 @@
-Test12
+Voici notre projet NutriSite !
+
+Il permet de naviguer dans une liste de produits vendus en magasin afin de sauvegarder ce que l'on a consummé chaque jour.
+On peut ensuite modifier la quantité prise ou la date de consommation ou même supprimer la consommation du produit si nécessaire.
+
+Vous pouvez aussi trouver un graphe qui vous montre votre consommation en calorie des 7 jours précédent la date chloride_serving
+(ce qui permet aussi de filtrer le tableau des consommations).
+
+Vous devez créer un compte et vous connecter pour que tout cela fonctionne.
+
+
+
+Consigne d'utilisation :
+
+Il faut lancer le fichier creationbase.php afin d'initialiser la base de donnée (qui contient les utilisateurs, les consommations et les produits).
+Ensuite vous pouvez naviguer dans le site.
+
+
+(Niveau organisation des fichiers, tout le dossier site correspond au front end et le reste au back end (gestion des sessions et des APIs))
+
