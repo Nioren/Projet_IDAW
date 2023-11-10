@@ -24,8 +24,8 @@
                 if (isset($_SESSION['username'])) {
                     echo "Bonjour, " . $_SESSION['username'];
                 } else {
-                    echo '<a href="connexion.html">Connexion</a>';
-                    echo '<a href="inscription.html">Inscription</a>';
+                    echo '<a href="connexion.php">Connexion</a>';
+                    echo '<a href="inscription.php">Inscription</a>';
                 }
                 ?>
             </div>

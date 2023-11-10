@@ -1,5 +1,5 @@
 <?php
-include 'config_api.php';
+include 'config.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $login = $_POST['login'];
@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $pdo->prepare($query);
     $stmt->execute([$login, $motDePasse, $dateNaissance, $niveauSportif]);
 
-    header("Location: connexion.php");
+    header("Location: http://localhost/Projet_IDAW/Site/connexion.php");
     exit();
 }
 ?>

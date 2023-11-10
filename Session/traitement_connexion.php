@@ -1,5 +1,5 @@
 <?php
-include 'config_api.php';
+include 'config.php';
 
 session_start();
 
@@ -14,10 +14,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($user && password_verify($motDePasse, $user['mot_de_passe'])) {
         $_SESSION['user_id'] = $user['id_utilisateur'];
-        header("Location: profil.php");
+        header("Location: http://localhost/Projet_IDAW/Site/profil.php");
         exit();
     } else {
-        header("Location: connexion.php?error=1");
+        header("Location: http://localhost/Projet_IDAW/Site/connexion.php?error=1");
         exit();
     }
 }

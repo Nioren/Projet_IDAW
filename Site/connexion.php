@@ -8,7 +8,7 @@
 
 <body>
     <h1>Connexion</h1>
-    <form action="traitement_connexion.php" method="post">
+    <form action="http://localhost/Projet_IDAW/Session/traitement_connexion.php" method="post">
         <label for="login">Login:</label>
         <input type="text" id="login" name="login" required><br>
 

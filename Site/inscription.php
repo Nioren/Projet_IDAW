@@ -8,7 +8,7 @@
 
 <body>
     <h1>Inscription</h1>
-    <form action="traitement_inscription.php" method="post">
+    <form action="http://localhost/Projet_IDAW/Session/traitement_inscription.php" method="post">
         <label for="login">Login:</label>
         <input type="text" id="login" name="login" required><br>
 
